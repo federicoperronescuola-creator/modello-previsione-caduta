@@ -46,21 +46,27 @@ ciò che permette di decidere **a ogni campione** invece di aspettare una finest
 
 ## Struttura del repository
 
-    codice/
-      modello_caduta.ipynb      l'intero lavoro, dal dataset al modello finale
-    risultati/
-      baseline_griglia.csv      algoritmo a soglie, griglia delle combinazioni provate
-      risultati_baseline_loso.csv  algoritmo a soglie, validazione leave-one-subject-out
-      risultati_albero.csv      albero decisionale, le dodici configurazioni valutate
-    figure/                     i grafici prodotti dal notebook
-    requirements.txt
+    modello_caduta.ipynb            l'intero lavoro, dal dataset al modello finale
+    caduta_esempio.png              una caduta vista sui segnali inerziali
+    caratteristiche_ricorsive.png   le quattro caratteristiche durante una caduta
+    albero_primi_livelli.png        i primi due livelli dell'albero decisionale
+    anticipo_modello.png            distribuzione dell'anticipo sulle cadute riconosciute
+    anticipo_baseline.png           la stessa distribuzione per l'algoritmo a soglie
+    compromesso_baseline.png        compromesso fra cadute riconosciute e falsi allarmi
+    confronto_albero_baseline.png   confronto fra il modello e l'algoritmo di riferimento
+    albero_mlc.txt                  l'albero nel formato importato dal sensore
+    mlc.json                        la configurazione dei registri del sensore
+    risultati_albero.csv            le dodici configurazioni di soglia e persistenza
+    risultati_baseline_loso.csv     l'algoritmo di riferimento, stessa validazione
+    baseline_griglia.csv            la griglia di soglie provate per il riferimento
 
 Il notebook è diviso in sette parti: verifica del dataset, algoritmo a soglie di
 riferimento, caratteristiche ricorsive, tabelle di addestramento, albero decisionale,
-validazione incrociata e confronto, esportazione verso il sensore.
+validazione incrociata e confronto, esportazione verso il sensore. GitHub lo mostra
+direttamente nel browser, con il codice e i grafici già eseguiti.
 
-I file intermedi pesanti (`tabella_addestramento.csv`, `risultati_v.pkl`) non sono
-inclusi: li rigenera il notebook.
+I file intermedi pesanti — la tabella di addestramento e i risultati grezzi della
+validazione — non sono inclusi: li rigenera il notebook.
 
 ## Dati
 
@@ -88,12 +94,12 @@ e il percorso va indicato nella prima cella del notebook.
 
 ## Come riprodurre
 
-    git clone <url-di-questo-repository>
-    cd <cartella>
+    git clone https://github.com/federicoperronescuola-creator/modello-previsione-caduta.git
+    cd modello-previsione-caduta
     python -m venv .venv
     .venv\Scripts\activate        # su Windows
-    pip install -r requirements.txt
-    jupyter notebook codice/modello_caduta.ipynb
+    pip install numpy pandas scipy matplotlib scikit-learn openpyxl jupyter
+    jupyter notebook modello_caduta.ipynb
 
 Le celle vanno eseguite in ordine. La validazione leave-one-subject-out ripete
 l'addestramento 32 volte ed è la parte più lenta: qualche minuto su un portatile.
@@ -105,9 +111,32 @@ configurazione del Machine Learning Core e scritto nei registri del sensore, che
 momento calcola le caratteristiche e valuta l'albero da solo, con un assorbimento
 dell'ordine dei microampere e senza bisogno che il microcontrollore sia acceso.
 
-Il percorso è: albero addestrato in Python → file ARFF con le caratteristiche →
-generazione dell'albero in MEMS Studio → configurazione del sensore → prova sulla
-scheda STEVAL-MKBOXPRO (SensorTile.box PRO).
+Il trasferimento è stato eseguito e provato sulla scheda STEVAL-MKBOXPRO
+(SensorTile.box PRO), che monta il LSM6DSV16X. Due file di questo repository lo
+documentano:
+
+    albero_mlc.txt   l'albero nel formato testuale importato da MEMS Studio
+    mlc.json         la configurazione dei registri generata per il sensore
+
+Esito: l'albero occupa **119 nodi dei 128 disponibili** (59 di decisione e 60 foglie) e
+impiega 4 delle 31 caratteristiche configurabili; la configurazione consiste in 338
+scritture di registro. Caricata nel sensore, l'uscita del Machine Learning Core
+(registro `MLC1_SRC`) passa da 0 a 4 durante la caduta, **prima dell'impatto**: su
+quattro cadute simulate l'anticipo rispetto al picco di accelerazione è risultato di
+190, 199, 199 e 295 ms.
+
+Il trasferimento ha richiesto due adattamenti che la documentazione non rende espliciti,
+ed entrambi sono implementati nella cella di esportazione del notebook:
+
+- le caratteristiche ricorsive del sensore sono filtri IIR con parametri `b1`, `b2`,
+  `a2`; il coefficiente α dell'addestramento corrisponde a `b1 = 1`, `b2 = α`,
+  `a2 = 1 − α`;
+- il sensore esprime la norma della velocità angolare in **rad/s**, mentre il modello è
+  addestrato su valori in **dps**: le soglie sul giroscopio vanno divise per 180/π
+  (quelle sulla varianza per il quadrato dello stesso fattore).
+
+Restano fuori da questo lavoro le misure di corrente e di autonomia, e il
+riaddestramento alla frequenza di 120 Hz del Machine Learning Core.
 
 ## Licenza
 
