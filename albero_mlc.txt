@@ -1,0 +1,121 @@
+F1_RECURSIVE_MEAN_ACC_V <= 0.821112
+|   F1_RECURSIVE_VARIANCE_ACC_V <= 0.158676
+|   |   F1_RECURSIVE_MEAN_ACC_V <= 0.696049
+|   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.185776
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.071318
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.601248: caduta (1046.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.601248: caduta (1229.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.071318
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 0.690101: non_caduta (363.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 0.690101: non_caduta (445.0)
+|   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.185776
+|   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.604593
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.105288: caduta (3035.0)
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.105288: caduta (191.0)
+|   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.604593
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.696295: caduta (843.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.696295: caduta (940.0)
+|   |   F1_RECURSIVE_MEAN_ACC_V > 0.696049
+|   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.627943
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.017204
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.765819: non_caduta (1456.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.765819: non_caduta (2711.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.017204
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.098568: non_caduta (4086.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.098568: non_caduta (1309.0)
+|   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.627943
+|   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 0.611182
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.742135: caduta (505.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.742135: non_caduta (1213.0)
+|   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 0.611182
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 0.858206: caduta (121.0)
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 0.858206: caduta (190.0)
+|   F1_RECURSIVE_VARIANCE_ACC_V > 0.158676
+|   |   F2_RECURSIVE_VARIANCE_GYR_V <= 0.945605
+|   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.644613
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.248320
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.201871: non_caduta (1065.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.201871: non_caduta (294.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.248320
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.366711: non_caduta (3604.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.366711: non_caduta (566.0)
+|   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.644613
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.234010
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 3.162616: non_caduta (334.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 3.162616: non_caduta (81.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.234010
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.537548: non_caduta (1422.0)
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.537548: non_caduta (143.0)
+|   |   F2_RECURSIVE_VARIANCE_GYR_V > 0.945605
+|   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.260774
+|   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 1.380718: caduta (52.0)
+|   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 1.380718: caduta (59.0)
+|   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.260774
+|   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 1.978507
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.704109: non_caduta (50.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.704109: caduta (100.0)
+|   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 1.978507: caduta (50.0)
+F1_RECURSIVE_MEAN_ACC_V > 0.821112
+|   F2_RECURSIVE_VARIANCE_GYR_V <= 0.894181
+|   |   F1_RECURSIVE_MEAN_ACC_V <= 0.955587
+|   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.003242
+|   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.927004
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 0.729756: non_caduta (2251.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 0.729756: non_caduta (3495.0)
+|   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.927004
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.001021: non_caduta (1514.0)
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.001021: non_caduta (3993.0)
+|   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.003242
+|   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 0.717195
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 0.003670: non_caduta (287.0)
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 0.003670: non_caduta (18387.0)
+|   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 0.717195
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 0.523640: non_caduta (20961.0)
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 0.523640: non_caduta (1025.0)
+|   |   F1_RECURSIVE_MEAN_ACC_V > 0.955587
+|   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 0.456046
+|   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 0.707789
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.983726: non_caduta (15276.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.983726: non_caduta (285369.0)
+|   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 0.707789
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 1.002183: non_caduta (19218.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 1.002183: non_caduta (66839.0)
+|   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 0.456046
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.096944
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 1.140235: non_caduta (2821.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 1.140235: non_caduta (583.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.096944
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 1.956341: non_caduta (2529.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 1.956341: non_caduta (2790.0)
+|   F2_RECURSIVE_VARIANCE_GYR_V > 0.894181
+|   |   F2_RECURSIVE_VARIANCE_GYR_V <= 1.507215
+|   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.104715
+|   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 0.932130: caduta (98.0)
+|   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 0.932130
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 3.057862: non_caduta (503.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 3.057862: non_caduta (325.0)
+|   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.104715
+|   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 2.189232
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.400193: caduta (300.0)
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.400193: non_caduta (717.0)
+|   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 2.189232
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V <= 2.010850: caduta (1683.0)
+|   |   |   |   |   F1_RECURSIVE_MEAN_ACC_V > 2.010850: caduta (85.0)
+|   |   F2_RECURSIVE_VARIANCE_GYR_V > 1.507215
+|   |   |   F2_RECURSIVE_MEAN_GYR_V <= 2.486959
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.861441
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.162817: non_caduta (53.0)
+|   |   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.162817: caduta (240.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.861441
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 2.127196: non_caduta (197.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 2.127196: non_caduta (169.0)
+|   |   |   F2_RECURSIVE_MEAN_GYR_V > 2.486959
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V <= 0.172365
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V <= 2.059093: non_caduta (152.0)
+|   |   |   |   |   F2_RECURSIVE_VARIANCE_GYR_V > 2.059093: caduta (76.0)
+|   |   |   |   F1_RECURSIVE_VARIANCE_ACC_V > 0.172365
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V <= 3.411185: caduta (732.0)
+|   |   |   |   |   F2_RECURSIVE_MEAN_GYR_V > 3.411185: caduta (1307.0)
+
+Number of Leaves  : 	60
+Size of the tree : 	119
