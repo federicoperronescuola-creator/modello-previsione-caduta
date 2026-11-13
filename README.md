@@ -31,6 +31,11 @@ A parità di falsi allarmi tollerati l'albero resta sopra l'algoritmo a soglie s
 la curva di compromesso, con un vantaggio fra i 18 e i 34 punti percentuali sulle
 cadute utili.
 
+Il modello è stato poi **caricato ed eseguito dentro il sensore**. Quella verifica ha
+mostrato due cose: che il trasferimento funziona, e che fra il modello validato e il
+modello eseguito c'è uno scarto importante. I due paragrafi "Dal modello al sensore" e
+"Cosa non torna fra calcolatore e dispositivo" lo descrivono.
+
 ## Le quattro caratteristiche
 
 Il MLC non ha memoria per conservare una finestra di segnale, quindi le caratteristiche
@@ -41,28 +46,33 @@ senza che il passato venga conservato.
 
 Le quattro grandezze usate dall'albero sono la media ricorsiva e la varianza ricorsiva
 del modulo dell'accelerazione e della velocità angolare. Restano piatte durante le
-attività quotidiane e si muovono con decisione appena la caduta comincia, e questo è
-ciò che permette di decidere **a ogni campione** invece di aspettare una finestra intera.
+attività quotidiane e si muovono con decisione appena la caduta comincia.
+
+In addestramento queste caratteristiche sono aggiornate **a ogni campione**. Dentro il
+sensore, come spiegato più sotto, l'aggiornamento avviene una volta per finestra: è la
+differenza all'origine dello scarto misurato.
 
 ## Struttura del repository
 
-    modello_caduta.ipynb            l'intero lavoro, dal dataset al modello finale
-    caduta_esempio.png              una caduta vista sui segnali inerziali
-    caratteristiche_ricorsive.png   le quattro caratteristiche durante una caduta
-    albero_primi_livelli.png        i primi due livelli dell'albero decisionale
-    anticipo_modello.png            distribuzione dell'anticipo sulle cadute riconosciute
-    anticipo_baseline.png           la stessa distribuzione per l'algoritmo a soglie
-    compromesso_baseline.png        compromesso fra cadute riconosciute e falsi allarmi
-    confronto_albero_baseline.png   confronto fra il modello e l'algoritmo di riferimento
-    albero_mlc.txt                  l'albero nel formato importato dal sensore
-    mlc.json                        la configurazione dei registri del sensore
-    risultati_albero.csv            le dodici configurazioni di soglia e persistenza
-    risultati_baseline_loso.csv     l'algoritmo di riferimento, stessa validazione
-    baseline_griglia.csv            la griglia di soglie provate per il riferimento
+    modello_caduta.ipynb              l'intero lavoro, dal dataset alle misure sul sensore
+    caduta_esempio.png                una caduta vista sui segnali inerziali
+    caratteristiche_ricorsive.png     le quattro caratteristiche durante una caduta
+    albero_primi_livelli.png          i primi due livelli dell'albero decisionale
+    anticipo_modello.png              distribuzione dell'anticipo sulle cadute riconosciute
+    anticipo_baseline.png             la stessa distribuzione per l'algoritmo a soglie
+    compromesso_baseline.png          compromesso fra cadute riconosciute e falsi allarmi
+    confronto_albero_baseline.png     confronto fra il modello e l'algoritmo di riferimento
+    albero_mlc.txt                    l'albero nel formato importato dal sensore
+    mlc.json                          la configurazione dei registri del sensore
+    risultati_albero.csv              le dodici configurazioni di soglia e persistenza
+    risultati_baseline_loso.csv       l'algoritmo di riferimento, stessa validazione
+    baseline_griglia.csv              la griglia di soglie provate per il riferimento
+    registrazioni_dispositivo.zip     le registrazioni fatte con il modello nel sensore
 
-Il notebook è diviso in sette parti: verifica del dataset, algoritmo a soglie di
+Il notebook è diviso in otto parti: verifica del dataset, algoritmo a soglie di
 riferimento, caratteristiche ricorsive, tabelle di addestramento, albero decisionale,
-validazione incrociata e confronto, esportazione verso il sensore. GitHub lo mostra
+validazione incrociata e confronto, esportazione verso il sensore, analisi delle
+registrazioni fatte con il modello in esecuzione nel sensore. GitHub lo mostra
 direttamente nel browser, con il codice e i grafici già eseguiti.
 
 I file intermedi pesanti — la tabella di addestramento e i risultati grezzi della
@@ -92,6 +102,13 @@ Una volta scaricato, il dataset va messo così:
 
 e il percorso va indicato nella prima cella del notebook.
 
+Le registrazioni fatte con il sensore sono invece incluse, in
+`registrazioni_dispositivo.zip`: tre prove di caduta con lunghezze di finestra diverse
+(`cadute_mlc2.csv`, `cadute_mlc3.csv`, `cadute_mlc4.csv`) e due registrazioni con il
+dispositivo indossato (`indossato.csv`, `indossato2.csv`). Ogni file riporta
+accelerazione, velocità angolare e l'uscita del Machine Learning Core, che vale 0 per
+"non caduta" e 4 per "caduta".
+
 ## Come riprodurre
 
     git clone https://github.com/federicoperronescuola-creator/modello-previsione-caduta.git
@@ -103,13 +120,15 @@ e il percorso va indicato nella prima cella del notebook.
 
 Le celle vanno eseguite in ordine. La validazione leave-one-subject-out ripete
 l'addestramento 32 volte ed è la parte più lenta: qualche minuto su un portatile.
+L'ottava parte non richiede KFall: lavora soltanto sui file di
+`registrazioni_dispositivo.zip`.
 
 ## Dal modello al sensore
 
 L'albero non viene eseguito da Python sul dispositivo: viene tradotto in una
 configurazione del Machine Learning Core e scritto nei registri del sensore, che da quel
-momento calcola le caratteristiche e valuta l'albero da solo, con un assorbimento
-dell'ordine dei microampere e senza bisogno che il microcontrollore sia acceso.
+momento calcola le caratteristiche e valuta l'albero da solo, senza bisogno che il
+microcontrollore sia acceso.
 
 Il trasferimento è stato eseguito e provato sulla scheda STEVAL-MKBOXPRO
 (SensorTile.box PRO), che monta il LSM6DSV16X. Due file di questo repository lo
@@ -123,20 +142,46 @@ impiega 4 delle 31 caratteristiche configurabili; la configurazione consiste in 
 scritture di registro. Caricata nel sensore, l'uscita del Machine Learning Core
 (registro `MLC1_SRC`) passa da 0 a 4 durante la caduta, **prima dell'impatto**: su
 quattro cadute simulate l'anticipo rispetto al picco di accelerazione è risultato di
-190, 199, 199 e 295 ms.
+269, 199, 277 e 225 ms, con mediana 247 ms. All'istante della decisione il modulo
+dell'accelerazione era fra 0,10 e 0,17 g, cioè in piena caduta libera.
 
-Il trasferimento ha richiesto due adattamenti che la documentazione non rende espliciti,
-ed entrambi sono implementati nella cella di esportazione del notebook:
+Il trasferimento ha richiesto tre adattamenti che la documentazione non rende espliciti,
+e tutti e tre sono implementati nelle celle di esportazione del notebook:
 
 - le caratteristiche ricorsive del sensore sono filtri IIR con parametri `b1`, `b2`,
   `a2`; il coefficiente α dell'addestramento corrisponde a `b1 = 1`, `b2 = α`,
   `a2 = 1 − α`;
 - il sensore esprime la norma della velocità angolare in **rad/s**, mentre il modello è
   addestrato su valori in **dps**: le soglie sul giroscopio vanno divise per 180/π
-  (quelle sulla varianza per il quadrato dello stesso fattore).
+  (quelle sulla varianza per il quadrato dello stesso fattore);
+- la finestra del Machine Learning Core **non è scorrevole**: l'albero produce un
+  risultato una volta per finestra e il filtro ricorsivo si aggiorna con la stessa
+  cadenza. Con dodici campioni a 120 Hz questo significa una decisione ogni 100 ms.
+
+## Cosa non torna fra calcolatore e dispositivo
+
+Lo stesso modello, eseguito nel sensore e indossato, produce fra 22 e 27 segnalazioni al
+minuto durante le normali attività quotidiane, contro le 3,0 al minuto che produce in
+Python sulle attività quotidiane di KFall. Il confronto ristretto al solo cammino è
+ancora più netto: 36–58 al minuto sul dispositivo contro 0,0–2,6 in Python.
+
+Lo scarto non dipende da come sono state fatte le registrazioni. Il segnale registrato
+indossando il dispositivo è **più tranquillo** di quello di KFall durante il cammino
+(deviazione standard del modulo 0,09–0,11 g contro 0,17–0,27 g; picchi 1,5 g contro
+2,9–3,4 g), e da fermo il sensore non produce quasi alcuna segnalazione. La causa sta
+dunque nel trasferimento, cioè nelle caratteristiche che il sensore calcola, e la
+spiegazione più probabile è l'aggiornamento del filtro una volta per finestra invece che
+a ogni campione: la memoria effettiva del filtro passa da 100 ms a circa 1 s. Questa
+misura però non isola il meccanismo, quindi resta l'ipotesi più compatibile con i dati,
+non un fatto dimostrato.
+
+Una mitigazione pratica c'è: chiedere al meta-classificatore due risultati consecutivi
+prima di dare l'allarme porta le segnalazioni da 26,5 a 6,1 e da 22,2 a 3,2 al minuto
+senza perdere nessuna delle quattro cadute, al prezzo di una finestra di ritardo.
 
 Restano fuori da questo lavoro le misure di corrente e di autonomia, e il
-riaddestramento alla frequenza di 120 Hz del Machine Learning Core.
+riaddestramento del modello sulle caratteristiche così come il sensore le calcola, che è
+l'intervento che aggredisce direttamente lo scarto appena descritto.
 
 ## Licenza
 
